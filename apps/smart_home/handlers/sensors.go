@@ -18,13 +18,15 @@ import (
 type SensorHandler struct {
 	DB                 *db.DB
 	TemperatureService *services.TemperatureService
+	Messaging          *services.MessagingService
 }
 
 // NewSensorHandler creates a new SensorHandler
-func NewSensorHandler(db *db.DB, temperatureService *services.TemperatureService) *SensorHandler {
+func NewSensorHandler(db *db.DB, temperatureService *services.TemperatureService, messaging *services.MessagingService) *SensorHandler {
 	return &SensorHandler{
 		DB:                 db,
 		TemperatureService: temperatureService,
+		Messaging:          messaging,
 	}
 }
 
@@ -203,11 +205,20 @@ func (h *SensorHandler) UpdateSensorValue(c *gin.Context) {
 		return
 	}
 
+	sensor, err := h.DB.GetSensorByID(context.Background(), id)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Sensor not found"})
+		return
+	}
+
 	err = h.DB.UpdateSensorValue(context.Background(), id, request.Value, request.Status)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 		return
 	}
+
+	// Publish telemetry event to RabbitMQ
+	h.Messaging.PublishTelemetryReading(id, request.Value, sensor.Unit)
 
 	c.JSON(http.StatusOK, gin.H{"message": "Sensor value updated successfully"})
 }

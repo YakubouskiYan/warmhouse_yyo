@@ -1,10 +1,11 @@
 module smarthome
 
-go 1.22
+go 1.20
 
 require (
 	github.com/gin-gonic/gin v1.8.2
 	github.com/jackc/pgx/v5 v5.3.1
+	github.com/rabbitmq/amqp091-go v1.9.0
 )
 
 require (

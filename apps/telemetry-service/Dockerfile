@@ -1,28 +1,27 @@
 # Build stage
-FROM mcr.microsoft.com/dotnet/sdk:8.0-alpine AS builder
+FROM maven:3.9-eclipse-temurin-21-alpine AS builder
 
 WORKDIR /src
 
-COPY TelemetryService.csproj .
-RUN dotnet restore
+COPY pom.xml .
+RUN mvn dependency:go-offline -q
 
-COPY . .
-RUN dotnet publish -c Release -o /app/publish --no-restore
+COPY src ./src
+RUN mvn package -DskipTests -q
 
 # Runtime stage
-FROM mcr.microsoft.com/dotnet/aspnet:8.0-alpine AS runtime
+FROM eclipse-temurin:21-jre-alpine AS runtime
 
 WORKDIR /app
 
 RUN addgroup -S appgroup && adduser -S appuser -G appgroup
 
-COPY --from=builder /app/publish .
+COPY --from=builder /src/target/*.jar app.jar
 
 USER appuser
 
 EXPOSE 8083
 
-ENV ASPNETCORE_URLS=http://+:8083
-ENV ASPNETCORE_ENVIRONMENT=Production
+ENV SERVER_PORT=8083
 
-ENTRYPOINT ["dotnet", "TelemetryService.dll"]
+ENTRYPOINT ["java", "-jar", "app.jar"]

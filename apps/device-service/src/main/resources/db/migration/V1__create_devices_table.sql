@@ -1,6 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS device_service;
-
-CREATE TABLE IF NOT EXISTS device_service.devices (
+CREATE TABLE device_service.devices (
     id               SERIAL PRIMARY KEY,
     name             VARCHAR(100) NOT NULL,
     serial_number    VARCHAR(100) NOT NULL UNIQUE,
@@ -12,6 +10,6 @@ CREATE TABLE IF NOT EXISTS device_service.devices (
     registered_at    TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_devices_home_id    ON device_service.devices (home_id);
-CREATE INDEX IF NOT EXISTS idx_devices_device_type ON device_service.devices (device_type);
-CREATE INDEX IF NOT EXISTS idx_devices_status      ON device_service.devices (status);
+CREATE INDEX idx_devices_home_id    ON device_service.devices (home_id);
+CREATE INDEX idx_devices_device_type ON device_service.devices (device_type);
+CREATE INDEX idx_devices_status      ON device_service.devices (status);

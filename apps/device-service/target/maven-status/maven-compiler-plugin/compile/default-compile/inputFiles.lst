@@ -1,9 +1,0 @@
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\model\Device.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\controller\DeviceController.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\repository\DeviceRepository.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\messaging\DeviceEventPublisher.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\service\DeviceService.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\dto\CreateDeviceRequest.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\dto\UpdateDeviceRequest.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\DeviceServiceApplication.java
-C:\Users\ян\Documents\Projects\warmhouse_yyo\apps\device-service\src\main\java\com\warmhouse\device\config\RabbitMQConfig.java

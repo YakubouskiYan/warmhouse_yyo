@@ -17,6 +17,11 @@ spring:
         default_schema: device_service
         dialect: org.hibernate.dialect.PostgreSQLDialect
     show-sql: false
+  flyway:
+    enabled: true
+    schemas: device_service
+    locations: classpath:db/migration
+    baseline-on-migrate: false
   rabbitmq:
     host: ${RABBITMQ_HOST:localhost}
     port: ${RABBITMQ_PORT:5672}

@@ -118,13 +118,15 @@ services:
       rabbitmq:
         condition: service_healthy
     environment:
-      - ConnectionStrings__DefaultConnection=Host=postgres;Port=5432;Database=smarthome;Username=postgres;Password=postgres;Search Path=telemetry_service
-      - RabbitMQ__Host=rabbitmq
-      - RabbitMQ__Port=5672
-      - RabbitMQ__Username=guest
-      - RabbitMQ__Password=guest
-      - RabbitMQ__Exchange=warmhouse.events
-      - RabbitMQ__TelemetryQueue=telemetry.readings.queue
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/smarthome?currentSchema=telemetry_service
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+      - SPRING_RABBITMQ_HOST=rabbitmq
+      - SPRING_RABBITMQ_PORT=5672
+      - SPRING_RABBITMQ_USERNAME=guest
+      - SPRING_RABBITMQ_PASSWORD=guest
+      - RABBITMQ_EXCHANGE=warmhouse.events
+      - RABBITMQ_TELEMETRY_QUEUE=telemetry.readings.queue
     ports:
       - "8083:8083"
     restart: unless-stopped

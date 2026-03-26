@@ -1,1 +1,8 @@
 .DS_Store
+
+# Maven build output
+**/target/
+
+# Python
+**/__pycache__/
+**/*.pyc

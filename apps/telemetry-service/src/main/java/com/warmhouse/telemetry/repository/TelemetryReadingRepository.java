@@ -14,14 +14,14 @@ public interface TelemetryReadingRepository extends JpaRepository<TelemetryReadi
 
     Optional<TelemetryReading> findFirstBySensorIdOrderByRecordedAtDesc(Integer sensorId);
 
-    @Query("SELECT r FROM TelemetryReading r WHERE r.sensorId = :sensorId " +
-           "AND (:from IS NULL OR r.recordedAt >= :from) " +
-           "AND (:to IS NULL OR r.recordedAt <= :to) " +
-           "ORDER BY r.recordedAt DESC")
-    List<TelemetryReading> findHistory(
-            @Param("sensorId") Integer sensorId,
-            @Param("from") OffsetDateTime from,
-            @Param("to") OffsetDateTime to,
-            Pageable pageable
-    );
+    List<TelemetryReading> findBySensorIdOrderByRecordedAtDesc(Integer sensorId, Pageable pageable);
+
+    @Query("SELECT r FROM TelemetryReading r WHERE r.sensorId = :sensorId AND r.recordedAt >= :from ORDER BY r.recordedAt DESC")
+    List<TelemetryReading> findHistoryFrom(@Param("sensorId") Integer sensorId, @Param("from") OffsetDateTime from, Pageable pageable);
+
+    @Query("SELECT r FROM TelemetryReading r WHERE r.sensorId = :sensorId AND r.recordedAt <= :to ORDER BY r.recordedAt DESC")
+    List<TelemetryReading> findHistoryTo(@Param("sensorId") Integer sensorId, @Param("to") OffsetDateTime to, Pageable pageable);
+
+    @Query("SELECT r FROM TelemetryReading r WHERE r.sensorId = :sensorId AND r.recordedAt >= :from AND r.recordedAt <= :to ORDER BY r.recordedAt DESC")
+    List<TelemetryReading> findHistoryBetween(@Param("sensorId") Integer sensorId, @Param("from") OffsetDateTime from, @Param("to") OffsetDateTime to, Pageable pageable);
 }

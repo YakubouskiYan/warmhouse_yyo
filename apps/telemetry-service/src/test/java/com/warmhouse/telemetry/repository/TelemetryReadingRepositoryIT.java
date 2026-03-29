@@ -82,7 +82,7 @@ class TelemetryReadingRepositoryIT {
 
         OffsetDateTime from = now.minusHours(2);
 
-        List<TelemetryReading> result = repository.findHistory(2, from, null,
+        List<TelemetryReading> result = repository.findHistoryFrom(2, from,
                 org.springframework.data.domain.PageRequest.of(0, 100));
 
         assertThat(result).hasSize(2);
@@ -95,7 +95,7 @@ class TelemetryReadingRepositoryIT {
         repository.save(buildReading(10, 22.0, now));
         repository.save(buildReading(11, 33.0, now));
 
-        List<TelemetryReading> result = repository.findHistory(10, null, null,
+        List<TelemetryReading> result = repository.findBySensorIdOrderByRecordedAtDesc(10,
                 org.springframework.data.domain.PageRequest.of(0, 100));
 
         assertThat(result).hasSize(1);

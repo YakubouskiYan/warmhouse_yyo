@@ -30,7 +30,7 @@ def make_temperature_response(location, sensor_id):
     return {
         "value": value,
         "unit": "celsius",
-        "timestamp": datetime.datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ"),
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
         "location": location,
         "status": "active",
         "sensor_id": sensor_id,
